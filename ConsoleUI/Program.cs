@@ -9,15 +9,33 @@ namespace ConsoleUI
     //Open Closed Principle: Koda yeni özellik eklerken, mevcuttaki kodlara dokunmamak,, sadece dataAccess ı değiştirdik ve program çalışıyor
     class Program
     {
+        //IoC
+        //Data Transformation Object (DTOs)
         static void Main(string[] args)
         {
-            ProductManager productManager = new ProductManager(new EfProductDal());
-            
-            foreach (var product in productManager.GetbyUnitPrice(40,100))
-            {
-                Console.WriteLine(product.ProductName);
-            }
 
+            ProductTest();
+            //CategoryTest();
+
+        }
+
+        private static void CategoryTest()
+        {
+            CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
+            foreach (var category in categoryManager.GetAll())
+            {
+                Console.WriteLine(category.CategoryName);
+            }
+        }
+
+        private static void ProductTest()
+        {
+            ProductManager productManager = new ProductManager(new EfProductDal());
+
+            foreach (var product in productManager.GetProductDetails())
+            {
+                Console.WriteLine(product.ProductName+ "/"+product.CategoryName);
+            }
         }
     }
 }
